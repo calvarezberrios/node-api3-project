@@ -25,6 +25,9 @@
     "dependencies": {
         "express": "^4.17.1",
         "knex": "^0.21.1",
+        "react-redux": "^7.2.0",
+        "redux": "^4.0.5",
+        "redux-thunk": "^2.3.0",
         "sqlite3": "^5.0.0"
     },
     "devDependencies": {
