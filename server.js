@@ -29,4 +29,9 @@ function logger(req, res, next) {
   next();
 }
 
+server.use((err, req, res, next) => {
+  res.status(err.code).json(err);
+});
+
 module.exports = server;
+

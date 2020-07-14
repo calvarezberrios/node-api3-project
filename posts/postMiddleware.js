@@ -9,10 +9,11 @@ function validatePostId(req, res, next) {
                 req.post = post;
                 next();
             } else {
+                next({ code: 400, message: "invalid post id" });
                 res.status(400).json({ message: "invalid post id" });
             }
         })
-        .catch(() => res.status(500).json({ message: "Error getting post data" }));
+        .catch(() => next({ code: 400, message: "Error getting post data" }));
 }
 
 module.exports = {
