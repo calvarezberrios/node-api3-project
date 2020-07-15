@@ -11,17 +11,18 @@ const Container = styled.div`
     flex-wrap: wrap;
     justify-content: center;
     align-items: center;
+    width: 100%;
 `;
 
-const MainContent = props => {
+const MainContent = ({ setPageTitle }) => {
     const { users } = useSelector(state => state.usersReducer);
     const dispatch = useDispatch();
 
     useEffect(() => dispatch(getUsers()), [dispatch]);
 
     useEffect(() => {
-        props.setPageTitle("All Users");
-    }, [props]);
+        setPageTitle("All Users");
+    }, [setPageTitle]);
 
     return (
         <Router>
@@ -32,7 +33,7 @@ const MainContent = props => {
                     ))}
                 </Route>
                 <Route path = {`/users/:id`} render = {p => (
-                    <UserPage setPageTitle = {props.setPageTitle} {...p} />
+                    <UserPage setPageTitle = {setPageTitle} {...p} />
                 )} />
             </Container>
         </Router>
