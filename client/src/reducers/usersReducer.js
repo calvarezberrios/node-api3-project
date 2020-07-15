@@ -1,4 +1,4 @@
-import { USERS_FETCH_START, USERS_FETCH_SUCCESS, USERS_FETCH_FAILURE } from "../actions/userActions";
+import { USERS_FETCH_START, USERS_FETCH_SUCCESS, USERS_FETCH_FAILURE, EDIT_USER, DELETE_USER, CREATE_USER } from "../actions/userActions";
 
 export const initialState = {
     users: [],
@@ -25,6 +25,29 @@ export default function usersReducer(state = initialState, action) {
                 ...state,
                 isFetching: false,
                 error: action.payload
+            }
+        case EDIT_USER:
+            return {
+                ...state,
+                users: state.users.map(user => {
+                    if(user.id === action.payload.id) {
+                        return action.payload;
+                    }
+                    return user;
+                }),
+                error: ""
+            }
+        case DELETE_USER:
+            return {
+                ...state,
+                users: state.users.filter(user => user.id !== action.payload),
+                error: ""
+            }
+        case CREATE_USER:
+            return {
+                ...state,
+                users: [...state.users, action.payload],
+                error: ""
             }
         default:
             return state;
