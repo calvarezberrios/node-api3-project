@@ -41,7 +41,10 @@ const UserForm = props => {
             />
             <br /><br />
             <Button variant = "contained" color = "primary" type = "submit">Add</Button>{" "}
-            <Button variant = "contained" color = "primary">Cancel</Button>
+            <Button variant = "contained" color = "primary" onClick = {() => {
+                setUser({name: ""}); 
+                push("/");
+            }}>Cancel</Button>
         </form>
     );
 };
