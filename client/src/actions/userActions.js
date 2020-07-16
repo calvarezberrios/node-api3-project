@@ -6,7 +6,6 @@ export const USERS_FETCH_FAILURE = "USERS_FETCH_FAILURE";
 export const EDIT_USER = "EDIT_USER";
 export const DELETE_USER = "DELETE_USER";
 export const CREATE_USER = "CREATE_USER";
-export const USER_POST_FETCH = "USER_POST_FETCH";
 
 export const getUsers = () => dispatch => {
     dispatch({type: USERS_FETCH_START});
@@ -72,20 +71,4 @@ export const createUser = user => dispatch => {
                 payload: err.response.data.message
             });
         })
-}
-
-export const getUserPosts = id => dispatch => {
-    axios.get(`http://localhost:5000/api/users/${id}/posts`)
-        .then(res => {
-            dispatch({
-                type: USER_POST_FETCH,
-                payload: res.data
-            });
-        })
-        .catch(err => {
-            dispatch({
-                type: USERS_FETCH_FAILURE,
-                payload: err.response.data.message
-            });
-        });
 }

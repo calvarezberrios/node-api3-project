@@ -1,16 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import Divider from '@material-ui/core/Divider';
-import ListItemText from '@material-ui/core/ListItemText';
-import ListItemAvatar from '@material-ui/core/ListItemAvatar';
-import Avatar from '@material-ui/core/Avatar';
 import TextField from "@material-ui/core/TextField";
 
 import Axios from 'axios';
-import { useDispatch } from 'react-redux';
 import { Button } from '@material-ui/core';
+import Post from "./Post";
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -22,26 +17,54 @@ const useStyles = makeStyles((theme) => ({
         display: 'inline',
     },
     input: {
-        width: "93%",
+        width: "90%",
+    },
+    post: {
+        display: "flex",
+        alignItems: "center",
     }
 }));
-
 
 const UserPage = ({ setPageTitle, match }) => {
     const classes = useStyles();
     const { id } = match.params;
-    const dispatch = useDispatch();
     const [user, setUser] = useState();
-    const [newPost, setNewPost] = useState({text: ""});
+    const [newPost, setNewPost] = useState({text: ""});    
+    const [isEditing, setIsEditing] = useState(false);
 
     const handleChange = e => {
         setNewPost({...newPost, [e.target.name]: e.target.value});
     }
 
+    
+
+    const submitPost = e => {
+        e.preventDefault();
+
+        if(newPost.text){
+            Axios.post(`http://localhost:5000/api/users/${id}/posts`, newPost)
+                .then(res => {
+                    setUser({
+                        ...user,
+                        posts: [...user.posts, res.data]
+                    });
+                })
+                .catch(err => {
+                    console.log(err.response.data.message);
+                });
+            
+                setNewPost({text: ""});
+        }
+    }
+
+    
     useEffect(() => {
+        setPageTitle(user ? `${user.name}'s Quotes` : `User's Quotes`);
+    }, [user, setPageTitle]);
+
+    const getUserData = () => {
         Axios.get(`http://localhost:5000/api/users/${id}`)
             .then(res => {
-
                 Axios.get(`http://localhost:5000/api/users/${id}/posts`)
                     .then(posts => {
                         setUser({
@@ -53,29 +76,17 @@ const UserPage = ({ setPageTitle, match }) => {
             })
             .catch(err => {
                 console.log(err.response.data.message);
-            })
-    }, [dispatch, id]);
+            });
+    }
 
     useEffect(() => {
-        setPageTitle(user ? `${user.name}'s Quotes` : `User's Quotes`);
-    }, [user, setPageTitle]);
+        getUserData();
+    }, [isEditing]);
 
     if (!user) return <h2>Loading User Data...</h2>;
     return (
         <List className={classes.root}>
-            {user.posts && user.posts.map((post, index) => (
-                <>
-                <ListItem alignItems="flex-start" className = {classes.post}>
-                    <ListItemAvatar>
-                        <Avatar alt={user.name} src={user.id} />
-                    </ListItemAvatar>
-                    <ListItemText
-                        primary={post.text}
-                    />
-                </ListItem>
-                {index < user.posts.length - 1 && <Divider variant="inset" component="li" />}
-                </>
-            ))}
+            {user.posts && user.posts.map((post, index) => <Post user = {user} post = {post} index = {index} key = {post.id} setUser = {setUser} setIsEditing = {setIsEditing} />)}
             <TextField 
                 id = "postText"
                 className = {classes.input}
@@ -87,8 +98,7 @@ const UserPage = ({ setPageTitle, match }) => {
                 multiline
                 variant = "outlined"
             />{" "}
-            <Button variant = "contained">Submit</Button>
-            
+            <Button variant = "contained" onClick = {submitPost}>Submit</Button>            
         </List>
     );
 };

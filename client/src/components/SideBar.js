@@ -86,10 +86,6 @@ function ResponsiveDrawer(props) {
                         <ListItemIcon></ListItemIcon>
                         <ListItemText primary= "All Users" />
                     </ListItem>
-                    <ListItem button>
-                        <ListItemIcon></ListItemIcon>
-                        <ListItemText primary= "All Posts" />
-                    </ListItem>
             </List>
             {/*<Divider />
             <List>
