@@ -17,6 +17,10 @@ server.use("/api/posts", postRouter);
 server.use(express.static(path.join(__dirname, "..", "build")));
 server.use(express.static("public"));
 
+server.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, "..", 'build', 'index.html'));
+});
+
 //custom middleware
 
 function logger(req, res, next) {
