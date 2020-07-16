@@ -10,7 +10,7 @@ export const CREATE_USER = "CREATE_USER";
 export const getUsers = () => dispatch => {
     dispatch({type: USERS_FETCH_START});
 
-    axios.get(`http://localhost:5000/api/users/`)
+    axios.get(`/api/users/`)
         .then(res => {
             dispatch({
                 type: USERS_FETCH_SUCCESS,
@@ -26,7 +26,7 @@ export const getUsers = () => dispatch => {
 }
 
 export const editUser = user => dispatch => {
-    axios.put(`http://localhost:5000/api/users/${user.id}`, user)
+    axios.put(`/api/users/${user.id}`, user)
         .then(() => {
             dispatch({
                 type: EDIT_USER,
@@ -42,7 +42,7 @@ export const editUser = user => dispatch => {
 } 
 
 export const removeUser = id => dispatch => {
-    axios.delete(`http://localhost:5000/api/users/${id}`)
+    axios.delete(`/api/users/${id}`)
         .then(() => {
             dispatch({
                 type: DELETE_USER,
@@ -58,7 +58,7 @@ export const removeUser = id => dispatch => {
 }
 
 export const createUser = user => dispatch => {
-    axios.post("http://localhost:5000/api/users", user)
+    axios.post("/api/users", user)
         .then(res => {
             dispatch({
                 type: CREATE_USER,

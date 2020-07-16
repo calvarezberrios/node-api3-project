@@ -42,7 +42,7 @@ const UserPage = ({ setPageTitle, match }) => {
         e.preventDefault();
 
         if(newPost.text){
-            Axios.post(`http://localhost:5000/api/users/${id}/posts`, newPost)
+            Axios.post(`/api/users/${id}/posts`, newPost)
                 .then(res => {
                     setUser({
                         ...user,
@@ -63,9 +63,9 @@ const UserPage = ({ setPageTitle, match }) => {
     }, [user, setPageTitle]);
 
     const getUserData = () => {
-        Axios.get(`http://localhost:5000/api/users/${id}`)
+        Axios.get(`/api/users/${id}`)
             .then(res => {
-                Axios.get(`http://localhost:5000/api/users/${id}/posts`)
+                Axios.get(`/api/users/${id}/posts`)
                     .then(posts => {
                         setUser({
                             ...res.data,

@@ -7,7 +7,7 @@ export const POST_FETCH_FAILURE = "POST_FETCH_FAILURE";
 export const getPosts = () => dispatch => {
     dispatch({type: POST_FETCH_START});
 
-    axios.get("http://localhost:5000/api/posts")
+    axios.get("/api/posts")
         .then(res => {
             dispatch({
                 type: POST_FETCH_SUCCESS,

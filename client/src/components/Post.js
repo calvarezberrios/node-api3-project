@@ -73,7 +73,7 @@ const Post = ({ user, post, index, setUser, setIsEditing }) => {
 
     const saveChanges = () => {
         if(value.text) {
-            Axios.put(`http://localhost:5000/api/posts/${post.id}`, value)
+            Axios.put(`/api/posts/${post.id}`, value)
                 .then(res => {
                     setUser({
                         ...user,
@@ -96,7 +96,7 @@ const Post = ({ user, post, index, setUser, setIsEditing }) => {
     const removePost = () => {
         handleClose();
         setIsEditing(true);
-        Axios.delete(`http://localhost:5000/api/posts/${post.id}`)
+        Axios.delete(`/api/posts/${post.id}`)
             .then(res => {
                 setUser({
                     ...user,

@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require("cors");
+const path = require("path");
 
 const userRouter = require("./users/userRouter");
 const postRouter = require("./posts/postRouter");
@@ -13,9 +14,8 @@ server.use(logger);
 server.use("/api/users", userRouter);
 server.use("/api/posts", postRouter);
 
-server.get('/', (req, res) => {
-  res.send(`<h2>Let's write some middleware!</h2>`);
-});
+server.use(express.static(path.join(__dirname, "./client", "build")));
+server.use(express.static("public"));
 
 //custom middleware
 
