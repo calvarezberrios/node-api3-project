@@ -19,7 +19,7 @@ function validateUserId(req, res, next) {
 
 function validateUser(req, res, next) {
     // do your magic!
-    if(!req.body) {
+    if(Object.keys(req.body).length === 0) {
         next({ code: 400, message: "missing user data" });
     } else if (!req.body.name) {
         next({ code: 400, message: "missing required name field" });
@@ -30,7 +30,7 @@ function validateUser(req, res, next) {
 
 function validatePost(req, res, next) {
     // do your magic!
-    if(!req.body) {
+    if(Object.keys(req.body).length === 0) {
         next({ code: 400, message: "missing post data" });
     } else if (!req.body.text) {
         next({ code: 400, message: "missing required text field" });

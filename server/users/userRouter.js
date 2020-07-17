@@ -15,7 +15,7 @@ router.post('/', userMiddleware.validateUser, (req, res, next) => {
     .catch(() => next({ code: 500, message: "There was an error creating the user" }));
 });
 
-router.post('/:id/posts', (req, res, next) => {
+router.post('/:id/posts', userMiddleware.validatePost, (req, res, next) => {
   // do your magic!
   const { id } = req.params;
   const newPost = req.body;
