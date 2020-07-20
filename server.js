@@ -18,11 +18,10 @@ server.get("/api", (req, res) => {
   res.send(`<h1>Users Api running successfully!</h1>`);
 });
 
-server.use(express.static(path.join(__dirname, "..", "build")));
-server.use(express.static("public"));
+server.use(express.static(path.join(__dirname, "client/build")));
 
 server.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname, "..", 'build', 'index.html'));
+  res.sendFile(path.join(__dirname, "client/build/index.html"));
 });
 
 //custom middleware
@@ -37,6 +36,7 @@ function logger(req, res, next) {
   next();
 }
 
+// Error Handler
 server.use((err, req, res, next) => {
   res.status(err.code).json(err);
 });
